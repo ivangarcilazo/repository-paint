@@ -7,8 +7,11 @@ import { roundThousand } from './utils';
 function App() {
 
   const clientHeight = window.innerHeight;
+  const clientWidth = window.innerWidth;
 
-  const cells = Array.from({ length: roundThousand((clientHeight / 20) * 100) }, () => 0);
+  const squareSize = (clientWidth / 100).toFixed(0);
+
+  const cells = Array.from({ length: roundThousand((clientHeight / squareSize) * 100) }, () => 0);
 
   const [cellColor, setCellColor] = useState([]);
 
@@ -79,9 +82,10 @@ function App() {
       <ul className='grid grid-cols-[repeat(100,1fr)]'>
         {
           cells.map((_, index) =>
-            <li key={index} className={`border border-gray-200 col-span-1 text-black h-[20px]  overflow-hidden `}
+            <li key={index} className={`border border-gray-200 col-span-1 text-black  overflow-hidden `}
               style={{
-                backgroundColor: cellColor.filter((cellColor) => cellColor.index == index)[0]?.color ?? ''
+                backgroundColor: cellColor.filter((cellColor) => cellColor.index == index)[0]?.color ?? '',
+                height: squareSize + 'px',
               }}
               onClick={(e) => { handlerClick(index, e) }}
               onMouseOver={() => {
